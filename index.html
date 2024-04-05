@@ -15,22 +15,25 @@
    id="scene"
    xrextras-tap-recenter>
     <a-assets>
-      <a-asset-item id="radio" src="3d/old_radio.glb"></a-asset-item>
+      <a-asset-item id="radio" src="3d/old_radio.glb" ></a-asset-item>
     </a-assets>
       <a-marker preset='custom' type='pattern'url='pattern-marker.patt' >
-          <a-entity id = 'radio-3d' gltf-model = '#radio' position = '0 0 0'></a-entity>
+          <a-entity sound id = 'radio-3d' gltf-model = '#radio' position = '0 0 0' sound="src:url(584429__zhr__relaxation-music-56.mp3); autoplay:true" preload="auto"></a-entity>
       </a-marker>
         <a-entity camera></a-entity>
     </a-scene>
   </body>
   <script>
-    AFRAME.registerComponent('button', {
-    init() {
-      document.getElementById('music').addEventListener('click', (e)=>{
-        //window.open('https://google.com', '_blank')
-        document.getElementById('music').innerHTML = 'Hey There';
-      })
-  }
-})
+    AFRAME.registerComponent('sound', {
+    init: function() {
+      if(this.data.autoplay){
+        this.playSound();}
+        this.updateEventListener();
+      }
+    });
+
+const openLink= () =>{
+  window.onload('https://google.com', '_blank');
+}
   </script>
 </html>
