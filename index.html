@@ -2,38 +2,41 @@
   <head>
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="https://cdn.rawgit.com/elbobo/aframe-multisrc-component/b6d23310/dist/0.3/aframe-multisrc-component.js"></script>
+    <script src="https://unpkg.com/aframe-animation-component@^5.1.2/dist/aframe-animation-component.min.js"></script> 
+    <script src="anime.min.js"></script>
     <link rel="stylesheet" href="style.css">
   </head>
   <body style="margin : 0px; overflow: hidden;">
-  <div class="button">
-      <button id="music">click me</button>
-  </div>
-  <a-scene embedded arjs
+<a-scene embedded arjs
    renderer="logarithmicDepthBuffer: true;"
    vr-mode-ui="enabled: false"
    gesture-detector
    id="scene"
    xrextras-tap-recenter>
-    <a-assets>
-      <a-asset-item id="radio" src="3d/old_radio.glb" ></a-asset-item>
-    </a-assets>
+   <a-assets>
+    <img id="roof" src="materials/roof.jpg">
+    <img id="roof-side" src="materials/roof -side.jpg">
+</a-assets>
       <a-marker preset='custom' type='pattern'url='pattern-marker.patt' >
-          <a-entity sound id = 'radio-3d' gltf-model = '#radio' position = '0 0 0' sound="src:url(584429__zhr__relaxation-music-56.mp3); autoplay:true" preload="auto"></a-entity>
+        <!--House-->
+        <a-box color="yellow" width="1.7" height="1.7" depth="1.7" roughness="1">
+          <a-box color="#992a18" position="0 0.875 0" width="1.8" height="0.25" depth="1.8" multisrc="src2:#roof;src1:#roof-side;src3:#roof-side" roughness="1"></a-box>
+          <a-plane color="blue" position="-0.425 0.270 0.859" width="0.5" height="0.5"></a-plane>
+          <a-plane color="blue" position="0.390 0.270 0.859" width="0.5" height="0.5"></a-plane>
+          <a-plane color="blue" side="double" position="-0.855 0.270 0.412" width="0.5" height="0.5" rotation="0 90 0"></a-plane>
+          <a-plane color="blue" side="double" position="0.855 0.270 0.412" width="0.5" height="0.5" rotation="0 90 0"></a-plane>
+          <a-plane color="brown" side="double" width="0.5" height="0.8" position="0 -0.442 0.851"></a-plane>
+
+          <!--Ufo-->
+          <a-sphere color="pink" radius="0.35" position="-4 4 0"
+          animation="property: position; dir:alternate; dur:5000; easing:easeInSine; loop:true; to: 4 4 0"
+          animation__rotate="property: rotation; dur:5000; from: 0 0 0;to: 0 360 0; dir:normal; easing: linear; loop:true"></a-sphere>
+          
+          <!--floor-->
+          <a-plane color="green" side="double" width="5" height="5" position="0 -0.870 0" rotation="90 180 0"></a-plane>
       </a-marker>
         <a-entity camera></a-entity>
     </a-scene>
   </body>
-  <script>
-    AFRAME.registerComponent('sound', {
-    init: function() {
-      if(this.data.autoplay){
-        this.playSound();}
-        this.updateEventListener();
-      }
-    });
-
-const openLink= () =>{
-  window.onload('https://google.com', '_blank');
-}
-  </script>
 </html>
